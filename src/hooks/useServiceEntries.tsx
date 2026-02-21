@@ -10,7 +10,7 @@ export type ServiceEntry = {
   machine_brand: string | null;
   problem_description: string | null;
   estimated_cost: number;
-  advance_paid: number;
+  unit: string;
   photo_url: string | null;
   status: "pending" | "repaired" | "delivered";
   created_at: string;
@@ -45,7 +45,7 @@ export const useCreateServiceEntry = () => {
       machine_brand?: string;
       problem_description?: string;
       estimated_cost?: number;
-      advance_paid?: number;
+      unit?: string;
       photo_url?: string;
     }) => {
       const { data: { user } } = await supabase.auth.getUser();

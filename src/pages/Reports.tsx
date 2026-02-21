@@ -24,25 +24,26 @@ const Reports = () => {
     .filter((e) => e.status === "delivered")
     .reduce((sum, e) => sum + Number(e.estimated_cost), 0);
 
-  const totalAdvance = entries.reduce((sum, e) => sum + Number(e.advance_paid), 0);
-
-  const pending = entries.filter((e) => e.status === "pending").length;
-  const repaired = entries.filter((e) => e.status === "repaired").length;
-  const delivered = entries.filter((e) => e.status === "delivered").length;
-
-  const pendingRevenue = entries
-    .filter((e) => e.status !== "delivered")
-    .reduce((sum, e) => sum + (Number(e.estimated_cost) - Number(e.advance_paid)), 0);
+  const pending = {
+    u1: entries.filter((e) => e.status === "pending" && e.unit === "unit_1").length,
+    u2: entries.filter((e) => e.status === "pending" && e.unit === "unit_2").length,
+  };
+  const repaired = {
+    u1: entries.filter((e) => e.status === "repaired" && e.unit === "unit_1").length,
+    u2: entries.filter((e) => e.status === "repaired" && e.unit === "unit_2").length,
+  };
+  const delivered = {
+    u1: entries.filter((e) => e.status === "delivered" && e.unit === "unit_1").length,
+    u2: entries.filter((e) => e.status === "delivered" && e.unit === "unit_2").length,
+  };
 
   const stats = [
-    { label: "Today's Earnings", value: `₹${todayEarnings.toLocaleString("en-IN")}`, icon: IndianRupee, color: "text-success" },
-    { label: "Total Revenue", value: `₹${totalRevenue.toLocaleString("en-IN")}`, icon: IndianRupee, color: "text-primary" },
-    { label: "Advance Collected", value: `₹${totalAdvance.toLocaleString("en-IN")}`, icon: IndianRupee, color: "text-accent" },
-    { label: "Pending Collection", value: `₹${pendingRevenue.toLocaleString("en-IN")}`, icon: IndianRupee, color: "text-warning" },
-    { label: "Pending Machines", value: pending, icon: Clock, color: "text-warning" },
-    { label: "Ready for Pickup", value: repaired, icon: CheckCircle2, color: "text-primary" },
-    { label: "Delivered", value: delivered, icon: Package, color: "text-success" },
-    { label: "Total Entries", value: entries.length, icon: Package, color: "text-foreground" },
+    { label: "Today's Earnings", value: `₹${todayEarnings.toLocaleString("en-IN")}`, icon: IndianRupee, color: "text-success", isSplit: false },
+    { label: "Total Revenue", value: `₹${totalRevenue.toLocaleString("en-IN")}`, icon: IndianRupee, color: "text-primary", isSplit: false },
+    { label: "Pending Machines", value: pending, icon: Clock, color: "text-warning", isSplit: true },
+    { label: "Ready for Pickup", value: repaired, icon: CheckCircle2, color: "text-primary", isSplit: true },
+    { label: "Delivered", value: delivered, icon: Package, color: "text-success", isSplit: true },
+    { label: "Total Entries", value: entries.length, icon: Package, color: "text-foreground", isSplit: false },
   ];
 
   return (
@@ -59,7 +60,20 @@ const Reports = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+              {stat.isSplit ? (
+                <div className="flex justify-between items-end">
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase">Unit 1</p>
+                    <p className={`text-2xl font-bold ${stat.color}`}>{(stat.value as any).u1}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-muted-foreground uppercase">Unit 2</p>
+                    <p className={`text-2xl font-bold ${stat.color}`}>{(stat.value as any).u2}</p>
+                  </div>
+                </div>
+              ) : (
+                <p className={`text-2xl font-bold ${stat.color}`}>{stat.value as any}</p>
+              )}
             </CardContent>
           </Card>
         ))}

@@ -46,19 +46,16 @@ export const generatePDF = (entry: ServiceEntry) => {
   doc.setFont("helvetica", "normal");
   doc.text(`Brand/Model: ${entry.machine_brand || "N/A"}`, 20, 106);
   doc.text(`Problem: ${entry.problem_description || "N/A"}`, 20, 112);
+  doc.text(`Unit: ${entry.unit === "unit_2" ? "Unit 2" : "Unit 1"}`, 20, 118);
 
   // Payment
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("Payment Details", 20, 126);
+  doc.text("Payment Details", 20, 132);
 
   doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
-  doc.text(`Estimated Cost: ₹${Number(entry.estimated_cost).toLocaleString("en-IN")}`, 20, 134);
-  doc.text(`Advance Paid: ₹${Number(entry.advance_paid).toLocaleString("en-IN")}`, 20, 140);
-  const balance = Number(entry.estimated_cost) - Number(entry.advance_paid);
   doc.setFont("helvetica", "bold");
-  doc.text(`Balance Due: ₹${balance.toLocaleString("en-IN")}`, 20, 148);
+  doc.text(`Estimated Cost: ₹${Number(entry.estimated_cost).toLocaleString("en-IN")}`, 20, 140);
 
   // Footer
   doc.setDrawColor(200, 200, 200);

@@ -3,25 +3,18 @@ import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 export const useAuth = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Bypass authentication - return mock user
+  const mockUser = {
+    id: "dev-user-id",
+    email: "dev@example.com",
+  } as User;
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const [user] = useState<User | null>(mockUser);
+  const [loading] = useState(false);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    // No-op for dev mode
+    console.log("Sign out bypassed in dev mode");
   };
 
   return { user, loading, signOut };

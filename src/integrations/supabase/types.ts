@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       service_entries: {
         Row: {
-          advance_paid: number | null
+          unit: string
           created_at: string
           created_by: string | null
           customer_name: string
@@ -33,7 +33,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          advance_paid?: number | null
+          unit?: string
           created_at?: string
           created_by?: string | null
           customer_name: string
@@ -50,7 +50,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          advance_paid?: number | null
+          unit?: string
           created_at?: string
           created_by?: string | null
           customer_name?: string
