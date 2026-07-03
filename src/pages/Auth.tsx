@@ -47,10 +47,10 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary">
-            <Scissors className="h-7 w-7 text-primary-foreground" />
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl overflow-hidden border shadow-sm">
+            <img src="/logo.jpg" alt="Logo" className="h-full w-full object-contain" />
           </div>
-          <CardTitle className="text-2xl font-bold">StitchTrack</CardTitle>
+          <CardTitle className="text-2xl font-bold tracking-tight">S R Sewing World Services</CardTitle>
           <CardDescription>Sewing Machine Service Management</CardDescription>
         </CardHeader>
         <CardContent>

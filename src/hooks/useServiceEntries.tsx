@@ -72,10 +72,11 @@ export const useUpdateStatus = () => {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: "repaired" | "delivered" }) => {
+    mutationFn: async ({ id, status, estimated_cost }: { id: string; status: "repaired" | "delivered"; estimated_cost?: number }) => {
       const updates: Record<string, unknown> = { status };
       if (status === "repaired") updates.repaired_at = new Date().toISOString();
       if (status === "delivered") updates.delivered_at = new Date().toISOString();
+      if (estimated_cost !== undefined) updates.estimated_cost = estimated_cost;
 
       const { error } = await supabase
         .from("service_entries")

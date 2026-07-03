@@ -281,7 +281,6 @@ const NewEntry = () => {
                   required
                   value={form.customer_phone}
                   onChange={(e) => setForm({ ...form, customer_phone: e.target.value.replace(/\D/g, "").slice(0, 10) })}
-                  placeholder="9876543210"
                 />
               </div>
             </div>
@@ -292,6 +291,22 @@ const NewEntry = () => {
                 <Input id="brand" value={form.machine_brand} onChange={(e) => setForm({ ...form, machine_brand: e.target.value })} />
                 {renderMicButton("machine_brand")}
               </div>
+              <div className="flex gap-2 mt-1">
+                {["Usha", "Merritt", "Singer"].map((brand) => (
+                  <button
+                    key={brand}
+                    type="button"
+                    onClick={() => setForm({ ...form, machine_brand: brand })}
+                    className={`px-3 py-1 text-xs rounded-lg border transition-all ${
+                      form.machine_brand === brand
+                        ? "bg-primary text-primary-foreground border-primary shadow-sm font-semibold"
+                        : "bg-card text-foreground hover:bg-muted border-input"
+                    }`}
+                  >
+                    {brand}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -299,6 +314,19 @@ const NewEntry = () => {
               <div className="flex gap-1 items-start">
                 <Textarea id="problem" value={form.problem_description} onChange={(e) => setForm({ ...form, problem_description: e.target.value })} rows={3} />
                 {renderMicButton("problem_description")}
+              </div>
+              <div className="flex gap-2 mt-1">
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, problem_description: "Full Service" })}
+                  className={`px-3 py-1 text-xs rounded-lg border transition-all ${
+                    form.problem_description === "Full Service"
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm font-semibold"
+                      : "bg-card text-foreground hover:bg-muted border-input"
+                  }`}
+                >
+                  Full Service
+                </button>
               </div>
             </div>
 
